@@ -13,7 +13,7 @@ f4a08d63b59d   centos    "/bin/bash"   50 seconds ago   Exited (0) 49 seconds ag
 
 ## 2.在 Docker 中部署 DVWA，要求：DVWA Web 端口映射到 8081，提供访问截图。
 
-![1](C:\Users\七号程序员詹姆师\Desktop\week3\1.png)
+![1](1.png)
 
 ## 3.MySQL 练习
 
@@ -45,4 +45,4 @@ f4a08d63b59d   centos    "/bin/bash"   50 seconds ago   Exited (0) 49 seconds ag
 
 - 使用 Navicat 连接你所创建的数据库，查看个人信息并提供截图。
 
-![2](C:\Users\七号程序员詹姆师\Desktop\week3\2.png)
+![2](2.png)
