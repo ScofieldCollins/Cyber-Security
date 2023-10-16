@@ -81,16 +81,17 @@ users表数据在users.csv里
 
 - ## 使用 pikachu 平台练习 XSS 键盘记录、前台 XSS 盲打攻击获取 cookie；
 
-  ![1](C:\Users\七号程序员詹姆师\Desktop\week8\1.png)
-
-![2](C:\Users\七号程序员詹姆师\Desktop\week8\2.png)
+![1](1.png)
 
 
+![2](2.png)
 
-![3](C:\Users\七号程序员詹姆师\Desktop\week8\3.png)
+
+![3](3.png)
 
 - ## 使用 beef 制作钓鱼页面，克隆任意站点的登录页面并获取用户登录的账号密码。
 
-  ![4](C:\Users\七号程序员詹姆师\Desktop\week8\4.png)
+![4](4.png)
 
-![5](C:\Users\七号程序员詹姆师\Desktop\week8\5.png)
+
+![5](5.png)
