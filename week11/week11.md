@@ -1,0 +1,139 @@
+---
+typora-root-url: ./
+---
+
+## 1.bluecms 旁注漏洞练习，为什么旁站攻击可以拿下主站？跨库的意思是什么？理解基于功能挖掘漏洞的过程。
+
+对后台获取Js功能进行测试发现存在SQL注入，通过order by来判断sql语句查了7列，通过SQL注入查询到库名，表名，列名，内容，得到管理员用户名和密码
+
+![1](C:\Users\七号程序员詹姆师\Desktop\week11\1.png)
+
+进行解密
+
+![2](C:\Users\七号程序员詹姆师\Desktop\week11\2.png)
+
+因此可以通过SQL注入跨库获取所有的数据库中的数据库名，表名，字段名
+
+![3](C:\Users\七号程序员詹姆师\Desktop\week11\3.png)
+
+当主站的防护做的比较完善时，可以采用迂回战术，攻击位于同一台服务器不同端口的旁站，往往旁站的防护设施比主站脆弱，所以旁站攻击容易拿下主站
+
+跨库是指当拿下数据库A时，意味着可以拿下当前的数据库管理系统，同一个数据库管理系统下的其余数据库也会被拿下
+
+## 2.水平越权 & 垂直越权漏洞实验。
+
+#### 水平越权
+
+谷歌浏览器登录lili账号，火狐登录lucy
+
+![4](C:\Users\七号程序员詹姆师\Desktop\week11\4.png)
+
+在lucy账号中点击查看个人信息然后用burp抓包，把用户名改为lili
+
+![5](C:\Users\七号程序员詹姆师\Desktop\week11\5.png)
+
+水平越权成功，可以看到lili的个人信息
+
+![6](C:\Users\七号程序员詹姆师\Desktop\week11\6.png)
+
+#### 垂直越权
+
+谷歌浏览器登录管理员账号，火狐登录pikachu账号，pikachu账号访问管理员添加用户的接口，并进行创建
+
+![7](C:\Users\七号程序员詹姆师\Desktop\week11\7.png)
+
+垂直越权成功，普通用户pikachu成功创建新用户
+
+![8](C:\Users\七号程序员詹姆师\Desktop\week11\8.png)
+
+## 3.密码修改逻辑漏洞
+
+登录普通用户进行修改密码，发现修改密码时对旧密码不进行验证，所以可以改其他用户的密码,用burp抓包，将id改为1看是否是admin的id
+
+![9](C:\Users\七号程序员詹姆师\Desktop\week11\9.png)
+
+浏览器页面显示修改密码成功，去后端数据库查看数据表，发现管理员admin密码修改成功
+
+![10](C:\Users\七号程序员詹姆师\Desktop\week11\10.png)
+
+## 4.暴力破解：使用 hydra 实现对 ftp、ssh、rdp、mysql 的暴力破解
+
+暴破ftp
+
+![11](C:\Users\七号程序员詹姆师\Desktop\week11\11.png)
+
+暴破ssh
+
+![12](C:\Users\七号程序员詹姆师\Desktop\week11\12.png)
+
+暴破rdp
+
+![13](C:\Users\七号程序员詹姆师\Desktop\week11\13.png)
+
+暴破mysql
+
+![14](C:\Users\七号程序员詹姆师\Desktop\week11\14.png)
+
+## 5.验证码安全
+
+- 验证码绕过（on client）+ 验证码绕过（on server）
+
+验证码绕过（on client）
+
+通过burp抓包发现没有抓取到数据包，是因为验证码在前端做了校验，所以直接禁用Js即可绕过验证码
+
+![15](C:\Users\七号程序员詹姆师\Desktop\week11\15.png)
+
+验证码绕过（on server）
+
+通过抓包多次修改密码发现，验证码可以重复使用
+
+![16](/16.png)
+
+所以通过暴力破解得到密码为123456
+
+![17](/17.png)
+
+- 验证码绕过（on server）实验中，为什么 burp 拦截开启的状态下，通过 Repeater 进行重放不会刷新验证码，关闭拦截后才会刷新验证码？
+
+  通过 Repeater 进行重放不会刷新验证码是因为只有burp与服务端进行通讯，客户端没有参与，不是完整的通讯过程
+
+  关闭拦截后才会刷新验证码是因为此时已经完成一次客户端请求和服务端响应，有一个完整的通讯过程
+
+## 6.CTFhub：SQL 注入靶场，分别完成手工注入和 Sqlmap 工具注入的过程
+
+#### 手工注入
+
+注入得到库名
+
+![18](/18.png)
+
+得到表名
+
+![19](/19.png)
+
+得到字段名
+
+![20](/20.png)
+
+得到Flag数据
+
+![21](/21.png)
+
+#### Sqlmap工具注入
+
+得到数据库名 D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --current-db
+
+![22](/22.png)
+
+得到表名  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --tables -D sqli
+
+![23](/23.png)
+
+得到字段名  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --columns -D sqli
+
+![24](/24.png)
+
+得到Flag数据  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch --dump -T flag
+
+![25](/25.png)
