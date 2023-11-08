@@ -6,15 +6,15 @@ typora-root-url: ./
 
 对后台获取Js功能进行测试发现存在SQL注入，通过order by来判断sql语句查了7列，通过SQL注入查询到库名，表名，列名，内容，得到管理员用户名和密码
 
-![1](\1.png)
+![1](1.png)
 
 进行解密
 
-![2](\2.png)
+![2](2.png)
 
 因此可以通过SQL注入跨库获取所有的数据库中的数据库名，表名，字段名
 
-![3](\3.png)
+![3](3.png)
 
 当主站的防护做的比较完善时，可以采用迂回战术，攻击位于同一台服务器不同端口的旁站，往往旁站的防护设施比主站脆弱，所以旁站攻击容易拿下主站
 
@@ -26,53 +26,53 @@ typora-root-url: ./
 
 谷歌浏览器登录lili账号，火狐登录lucy
 
-![4](\4.png)
+![4](4.png)
 
 在lucy账号中点击查看个人信息然后用burp抓包，把用户名改为lili
 
-![5](\5.png)
+![5](5.png)
 
 水平越权成功，可以看到lili的个人信息
 
-![6](\6.png)
+![6](6.png)
 
 #### 垂直越权
 
 谷歌浏览器登录管理员账号，火狐登录pikachu账号，pikachu账号访问管理员添加用户的接口，并进行创建
 
-![7](\7.png)
+![7](7.png)
 
 垂直越权成功，普通用户pikachu成功创建新用户
 
-![8](\8.png)
+![8](8.png)
 
 ## 3.密码修改逻辑漏洞
 
 登录普通用户进行修改密码，发现修改密码时对旧密码不进行验证，所以可以改其他用户的密码,用burp抓包，将id改为1看是否是admin的id
 
-![9](\9.png)
+![9](9.png)
 
 浏览器页面显示修改密码成功，去后端数据库查看数据表，发现管理员admin密码修改成功
 
-![10](\10.png)
+![10](10.png)
 
 ## 4.暴力破解：使用 hydra 实现对 ftp、ssh、rdp、mysql 的暴力破解
 
 暴破ftp
 
-![11](\11.png)
+![11](11.png)
 
 暴破ssh
 
-![12](\12.png)
+![12](12.png)
 
 暴破rdp
 
-![13](\13.png)
+![13](13.png)
 
 暴破mysql
 
-![14](\14.png)
+![14](14.png)
 
 ## 5.验证码安全
 
@@ -82,17 +82,17 @@ typora-root-url: ./
 
 通过burp抓包发现没有抓取到数据包，是因为验证码在前端做了校验，所以直接禁用Js即可绕过验证码
 
-![15](\15.png)
+![15](15.png)
 
 验证码绕过（on server）
 
 通过抓包多次修改密码发现，验证码可以重复使用
 
-![16](/16.png)
+![16](16.png)
 
 所以通过暴力破解得到密码为123456
 
-![17](/17.png)
+![17](17.png)
 
 - 验证码绕过（on server）实验中，为什么 burp 拦截开启的状态下，通过 Repeater 进行重放不会刷新验证码，关闭拦截后才会刷新验证码？
 
@@ -106,34 +106,34 @@ typora-root-url: ./
 
 注入得到库名
 
-![18](/18.png)
+![18](18.png)
 
 得到表名
 
-![19](/19.png)
+![19](19.png)
 
 得到字段名
 
-![20](/20.png)
+![20](20.png)
 
 得到Flag数据
 
-![21](/21.png)
+![21](21.png)
 
 #### Sqlmap工具注入
 
 得到数据库名 D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --current-db
 
-![22](/22.png)
+![22](22.png)
 
 得到表名  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --tables -D sqli
 
-![23](/23.png)
+![23](23.png)
 
 得到字段名  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch -p id --columns -D sqli
 
-![24](/24.png)
+![24](24.png)
 
 得到Flag数据  D:\python3\sqlmap>python sqlmap.py -r 1.txt --batch --dump -T flag
 
-![25](/25.png)
+![25](25.png)
