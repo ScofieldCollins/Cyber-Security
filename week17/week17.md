@@ -4,11 +4,11 @@
 
 GET请求的XSS漏洞防御
 
-![GET](C:\Users\七号程序员詹姆师\Desktop\week17\task1\GET.png)
+![GET](task1/GET.png)
 
 POST请求的XSS漏洞防御
 
-![POST](C:\Users\七号程序员詹姆师\Desktop\week17\task1\POST.png)
+![POST](task1/POST.png)
 
 ## 2.写一个三层循环嵌套，分别使用 continue、break 跳出 / 跳转最外层循环。
 
